@@ -68,9 +68,9 @@ class EmotionPredictor:
         elif self.classification in ['ekman', 'plutchik']:
             return 141
 
-    def predict_classes(self, tweets):
+    def predict_classes(self, tweets, verbose=False):
         indices = self._tweet_to_indices(tweets)
-        predictions = self.model.predict(indices, verbose=False)
+        predictions = self.model.predict(indices, verbose=verbose)
 
         df = pd.DataFrame({'Tweet': tweets})
         if self.setting == 'mc':
@@ -83,9 +83,9 @@ class EmotionPredictor:
                 df[emotion] = values
         return df
 
-    def predict_probabilities(self, tweets):
+    def predict_probabilities(self, tweets, verbose=False):
         indices = self._tweet_to_indices(tweets)
-        predictions = self.model.predict(indices, verbose=False)
+        predictions = self.model.predict(indices, verbose=verbose)
 
         df = pd.DataFrame({'Tweet': tweets})
         for emotion, values in zip(self.class_values, predictions.T):
