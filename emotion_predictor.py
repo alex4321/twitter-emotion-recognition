@@ -1,5 +1,6 @@
 import html
 import pickle
+import os
 import re
 
 import pandas as pd
@@ -34,11 +35,11 @@ class EmotionPredictor:
         self.max_len = self._get_max_sequence_length()
 
     def _get_model(self):
-        self._loaded_model_filename = 'models/{}{}-{}.h5'.format(
+        self._loaded_model_filename = os.path.join(os.path.dirname(__file__), 'models', '{}{}-{}.h5'.format(
             'unison-' if self.use_unison_model else '',
             self.classification,
             self.setting,
-        )
+        ))
         return load_model(self._loaded_model_filename)
 
     def _get_embeddings_model(self):
@@ -49,7 +50,7 @@ class EmotionPredictor:
 
     @staticmethod
     def _get_char_mapping():
-        with open('models/allowed-chars.pkl', 'rb') as f:
+        with open(os.path.join(os.path.dirname(__file__), 'models', 'allowed-chars.pkl'), 'rb') as f:
             return pickle.load(f)
 
     def _get_class_values(self):
