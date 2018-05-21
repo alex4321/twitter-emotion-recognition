@@ -39,6 +39,7 @@ class EmotionPredictor:
             self.classification,
             self.setting,
         )
+        print("Loading model from {0}".format(self._loaded_model_filename))
         return load_model(self._loaded_model_filename)
 
     def _get_embeddings_model(self):
